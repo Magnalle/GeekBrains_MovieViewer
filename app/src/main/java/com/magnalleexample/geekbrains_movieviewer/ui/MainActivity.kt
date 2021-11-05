@@ -1,8 +1,9 @@
-package com.magnalleexample.geekbrains_movieviewer
+package com.magnalleexample.geekbrains_movieviewer.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.magnalleexample.geekbrains_movieviewer.ui.main.HomeFragment
+import com.magnalleexample.geekbrains_movieviewer.R
+import com.magnalleexample.geekbrains_movieviewer.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
