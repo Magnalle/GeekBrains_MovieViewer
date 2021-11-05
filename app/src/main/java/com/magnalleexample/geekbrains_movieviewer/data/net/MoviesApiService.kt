@@ -6,7 +6,7 @@ import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
 
 object MoviesApiService {
     fun getGenres(): List<Genre>{
-        return listOf(Genre(1, "Action"))
+        return listOf(Genre(1, "Action"), Genre(1, "Fantasy"))
         TODO("")
     }
 
@@ -16,12 +16,12 @@ object MoviesApiService {
     }
 
     fun getWatchList() : MutableList<MovieData>{
-        return mutableListOf(MovieData(1, "Some movie", 5.0, "", 2020))
+        return mutableListOf(MovieData(1, "Some movie 1", 5.0, "", 2020), MovieData(2, "Some movie 2", 5.0, "", 2020))
         TODO("")
     }
 
     fun getFavorites() : MutableList<MovieData>{
-        return mutableListOf(MovieData(1, "Some movie", 5.0, "", 2020))
+        return mutableListOf(MovieData(1, "Favorite movie", 5.0, "", 2020), MovieData(2, "Favorite movie 2", 5.0, "", 2020))
         TODO("")
     }
 

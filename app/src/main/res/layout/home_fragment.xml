@@ -54,7 +54,7 @@
             android:id="@+id/favorites_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/watchlist"
+            android:text="@string/favorites"
             android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@+id/watch_list_recycler_view"
             tools:layout_editor_absoluteX="175dp"

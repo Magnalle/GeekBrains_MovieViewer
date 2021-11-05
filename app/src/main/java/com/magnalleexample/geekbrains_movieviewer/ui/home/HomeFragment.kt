@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,9 @@ import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieListAdapter
 class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
+    companion object {
+        fun newInstance() = HomeFragment()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +38,8 @@ class HomeFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val spinnerAdapter: ArrayAdapter<String> =
-            ArrayAdapter<String>(application.applicationContext, android.R.layout.simple_spinner_item, Repo.languages.map { it.name })
+            ArrayAdapter<String>(application.applicationContext, android.R.layout.simple_spinner_item,
+                listOf("All genres").plus(Repo.genres.map { it.name }))
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.genresSpinner.setAdapter(spinnerAdapter)
 
@@ -51,8 +56,23 @@ class HomeFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         })
 
-        binding.watchListRecyclerView.adapter = MovieListAdapter()
-        binding.watchListRecyclerView.layoutManager = LinearLayoutManager(activity)
+        val watchListAdapter = MovieListAdapter()
+        binding.watchListRecyclerView.adapter = watchListAdapter
+        binding.watchListRecyclerView.layoutManager = LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false)
+        viewModel.watchList.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                watchListAdapter.submitList(it)
+            }
+        })
+
+        val favoritesAdapter = MovieListAdapter()
+        binding.favoritesRecyclerView.adapter = favoritesAdapter
+        binding.favoritesRecyclerView.layoutManager = LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false)
+        viewModel.favorites.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                favoritesAdapter.submitList(it)
+            }
+        })
 
         return binding.root
     }
