@@ -26,9 +26,11 @@ object MoviesApiService {
     }
 
     fun addToWatchList(movie: MovieData){
+        return
         TODO("")
     }
     fun addToFavorites(movie: MovieData){
+        return
         TODO("")
     }
 }

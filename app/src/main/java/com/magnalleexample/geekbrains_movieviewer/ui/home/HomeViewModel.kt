@@ -14,4 +14,17 @@ class HomeViewModel : ViewModel() {
     val favorites : MutableLiveData<List<MovieData>> = MutableLiveData(Repo.favorites)
 
     var _response = MutableLiveData<String>()
+
+    private var _navigateToMovieData = MutableLiveData<MovieData?>()
+    val navigateToMovieData
+        get() = _navigateToMovieData
+
+    fun onMovieClicked(movieData: MovieData){
+        _navigateToMovieData.postValue(movieData)
+    }
+
+    fun doneNavigating() {
+        _navigateToMovieData.value = null
+    }
+
 }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.magnalleexample.geekbrains_movieviewer.databinding.ListItemMovieViewBinding
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
 
-class MovieListAdapter(): ListAdapter<MovieData, RecyclerView.ViewHolder>(DiffCallback)  {
+class MovieListAdapter(val clickListener : MovieDataListener): ListAdapter<MovieData, RecyclerView.ViewHolder>(DiffCallback)  {
     companion object DiffCallback : DiffUtil.ItemCallback<MovieData>(){
         override fun areItemsTheSame(oldItem: MovieData, newItem: MovieData): Boolean {
             return oldItem === newItem
@@ -28,7 +28,7 @@ class MovieListAdapter(): ListAdapter<MovieData, RecyclerView.ViewHolder>(DiffCa
         when (holder) {
             is MovieDataViewHolder -> {
                 val item: MovieDataViewHolder = holder
-                item.bind(getItem(position))
+                item.bind(getItem(position), clickListener)
             }
         }
     }
@@ -40,9 +40,14 @@ class MovieListAdapter(): ListAdapter<MovieData, RecyclerView.ViewHolder>(DiffCa
                 return MovieDataViewHolder(binding)
             }
         }
-        fun bind(movieData: MovieData){
+        fun bind(movieData: MovieData, clickListener : MovieDataListener){
             binding.movieData = movieData
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
     }
+}
+
+class MovieDataListener(private val clickListener : (movieData: MovieData) -> Unit){
+    fun onClick(movieData: MovieData) = clickListener.invoke(movieData)
 }
