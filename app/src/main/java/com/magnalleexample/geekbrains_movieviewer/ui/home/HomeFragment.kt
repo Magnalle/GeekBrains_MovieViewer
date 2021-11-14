@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.make
 import com.magnalleexample.geekbrains_movieviewer.R
 import com.magnalleexample.geekbrains_movieviewer.databinding.HomeFragmentBinding
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
@@ -29,12 +31,16 @@ class HomeFragment : Fragment() , HomeInterface.View {
         fun newInstance() = HomeFragment()
     }
 
+    fun View.showSelectedGenre(genre: String){
+        make(this, genre, Snackbar.LENGTH_INDEFINITE).show()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val application = requireNotNull(this.activity).application
-        val binding: HomeFragmentBinding = DataBindingUtil.inflate(
+        val binding : HomeFragmentBinding = DataBindingUtil.inflate(
             inflater, R.layout.home_fragment, container, false
         )
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
@@ -55,7 +61,8 @@ class HomeFragment : Fragment() , HomeInterface.View {
                 id: Long
             ) {
                 // TODO
-                //val item = viewModel.getGenresFormatted().get(position)
+                val item = viewModel.getGenresFormatted().get(position)
+                binding.genresSpinner.showSelectedGenre(item)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
