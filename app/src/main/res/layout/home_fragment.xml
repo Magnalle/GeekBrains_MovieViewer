@@ -2,12 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <data>
-        <variable
-            name = "viewModel"
-            type = "com.magnalleexample.geekbrains_movieviewer.ui.home.HomeViewModel"
-            />
-    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/home_constraint_layout"
         android:layout_width="match_parent"

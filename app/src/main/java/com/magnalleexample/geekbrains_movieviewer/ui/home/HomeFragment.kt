@@ -16,14 +16,18 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.magnalleexample.geekbrains_movieviewer.R
 import com.magnalleexample.geekbrains_movieviewer.databinding.HomeFragmentBinding
+import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
 import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
 import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieDataListener
 import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieListAdapter
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment() , HomeInterface.View{
 
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var presenter : HomeInterface.Presenter
+    override var watchListAdapter: MovieListAdapter? = null
+    override var favoritesListAdapter: MovieListAdapter? = null
+
     companion object {
         fun newInstance() = HomeFragment()
     }
@@ -36,60 +40,46 @@ class HomeFragment : Fragment() {
         val binding: HomeFragmentBinding = DataBindingUtil.inflate(
             inflater, R.layout.home_fragment, container, false
         )
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
 
+        watchListAdapter = MovieListAdapter(MovieDataListener{
+            navigateToMovieData(it)
+        })
+
+        favoritesListAdapter = MovieListAdapter(MovieDataListener{
+            navigateToMovieData(it)
+        })
+
+        binding.watchListRecyclerView.adapter = watchListAdapter
+        binding.watchListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        binding.favoritesRecyclerView.adapter = favoritesListAdapter
+        binding.favoritesRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        presenter = HomePresenter()
+        presenter.attach(this)
         val spinnerAdapter: ArrayAdapter<String> =
             ArrayAdapter<String>(application.applicationContext, android.R.layout.simple_spinner_item,
-                listOf("All genres").plus(Repo.genres.map { it.name }))
+                presenter.getGenresListFormatted())
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.genresSpinner.setAdapter(spinnerAdapter)
-
-//        binding.genresSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>,
-//                view: View,
-//                position: Int,
-//                id: Long
-//            ) {
-//                val item = parent.getItemAtPosition(position) as String
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {}
-//        })
-
-        val watchListAdapter = MovieListAdapter(MovieDataListener{
-            viewModel.onMovieClicked(it)
-        })
-        binding.watchListRecyclerView.adapter = watchListAdapter
-        binding.watchListRecyclerView.layoutManager = LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false)
-        viewModel.watchList.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                watchListAdapter.submitList(it)
-            }
-        })
-
-        val favoritesAdapter = MovieListAdapter(MovieDataListener{
-            viewModel.onMovieClicked(it)
-        })
-        binding.favoritesRecyclerView.adapter = favoritesAdapter
-        binding.favoritesRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        viewModel.favorites.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                favoritesAdapter.submitList(it)
-            }
-        })
-
-        viewModel.navigateToMovieData.observe(viewLifecycleOwner, Observer { movieData ->
-            movieData?.let {
-                this.findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToMovieFragment(movieData))
-                viewModel.doneNavigating()
-            }
-        })
+        binding.genresSpinner.adapter = spinnerAdapter
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        presenter.detach()
+        super.onDestroyView()
+    }
+
+    override fun navigateToMovieData(movieData: MovieData){
+        this.findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToMovieFragment(movieData))
+    }
+
+    override fun updateWatchList() {
+        watchListAdapter?.submitList(presenter.watchList)
+    }
+
+    override fun updateFavoritesList() {
+        favoritesListAdapter?.submitList(presenter.favorites)
     }
 
 }

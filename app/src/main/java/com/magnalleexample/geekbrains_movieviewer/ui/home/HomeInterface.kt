@@ -4,12 +4,25 @@ import androidx.lifecycle.MutableLiveData
 import com.magnalleexample.geekbrains_movieviewer.data.net.MoviesApiService
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.Genre
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
-import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
+import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieListAdapter
+
 
 class HomeInterface {
-    interface ViewModel{
+    interface View{
+        fun navigateToMovieData(movieData: MovieData)
+        var watchListAdapter : MovieListAdapter?
+        var favoritesListAdapter : MovieListAdapter?
+        fun updateWatchList()
+        fun updateFavoritesList()
+    }
+    interface Presenter{
+        var view: View?
         val genresList : List<Genre>
-        val watchList : MutableLiveData<List<MovieData>>
-        val favorites : MutableLiveData<List<MovieData>>
+        val watchList : List<MovieData>
+        val favorites : List<MovieData>
+        fun attach(view : View)
+        fun detach()
+        fun getGenresListFormatted() : List<String>
+
     }
 }
