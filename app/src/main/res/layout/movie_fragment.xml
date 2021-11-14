@@ -12,13 +12,13 @@
             type="com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/home_layout"
+        android:id="@+id/home_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.movie.MovieFragment">
 
         <ImageView
-            android:id="@+id/movie_image"
+            android:id="@+id/movie_poster_image_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -47,7 +47,7 @@
             app:layout_constraintGuide_percent="0.3" />
 
         <TextView
-            android:id="@+id/movie_title_text"
+            android:id="@+id/movie_title_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -56,7 +56,6 @@
             android:ellipsize="end"
             android:maxLines="5"
             android:nestedScrollingEnabled="false"
-            android:text="@{movieData.name}"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="24sp"
@@ -67,14 +66,14 @@
             tools:text="Some movie with long name 3432552 dfgfdg dgdsgd dgdgdsg  sdfsdgs" />
 
         <TextView
-            android:id="@+id/movie_imdb_caption_text"
+            android:id="@+id/movie_imdb_caption_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text = "@string/imdb"
-            app:layout_constraintStart_toEndOf="@+id/movie_image"
-            app:layout_constraintTop_toBottomOf="@+id/movie_title_text" />
+            app:layout_constraintStart_toEndOf="@+id/movie_poster_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/movie_title_text_view" />
 
         <TextView
             android:id="@+id/movie_imdb_text"
@@ -82,8 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@+id/movie_imdb_caption_text"
-            app:layout_constraintTop_toBottomOf="@+id/movie_title_text"
+            app:layout_constraintStart_toEndOf="@+id/movie_imdb_caption_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/movie_title_text_view"
             tools:text="123456789" />
 
         <TextView
@@ -92,69 +91,69 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@+id/movie_image"
-            app:layout_constraintTop_toBottomOf="@+id/movie_imdb_caption_text"
+            app:layout_constraintStart_toEndOf="@+id/movie_poster_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/movie_imdb_caption_text_view"
             android:text="@string/release_date" />
 
         <TextView
-            android:id="@+id/movie_release_date_text"
+            android:id="@+id/movie_release_date_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toEndOf="@+id/movie_release_date_caption_text"
-            app:layout_constraintTop_toBottomOf="@+id/movie_imdb_caption_text"
+            app:layout_constraintTop_toBottomOf="@+id/movie_imdb_caption_text_view"
             tools:text="2020" />
 
         <TextView
-            android:id="@+id/movie_production_companies_caption_text"
+            android:id="@+id/movie_production_companies_caption_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@+id/movie_image"
+            app:layout_constraintStart_toEndOf="@+id/movie_poster_image_view"
             app:layout_constraintTop_toBottomOf="@+id/movie_release_date_caption_text"
             android:text="@string/produced_by" />
 
         <TextView
-            android:id="@+id/movie_production_companies_text"
+            android:id="@+id/movie_production_companies_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@+id/movie_production_companies_caption_text"
+            app:layout_constraintStart_toEndOf="@+id/movie_production_companies_caption_text_view"
             app:layout_constraintTop_toBottomOf="@+id/movie_release_date_caption_text"
             tools:text="Disney" />
 
         <TextView
-            android:id="@+id/movie_production_countries_caption_text"
+            android:id="@+id/movie_production_countries_caption_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@+id/movie_image"
-            app:layout_constraintTop_toBottomOf="@+id/movie_production_companies_text"
+            app:layout_constraintStart_toEndOf="@+id/movie_poster_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/movie_production_companies_text_view"
             android:text="@string/country" />
 
         <TextView
-            android:id="@+id/movie_production_countries_text"
+            android:id="@+id/movie_production_countries_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@+id/movie_production_countries_caption_text"
-            app:layout_constraintTop_toBottomOf="@+id/movie_production_companies_text"
+            app:layout_constraintStart_toEndOf="@+id/movie_production_countries_caption_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/movie_production_companies_text_view"
             tools:text="USA" />
 
         <TextView
-            android:id="@+id/movie_genres_caption_text"
+            android:id="@+id/movie_genres_caption_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/genres"
-            app:layout_constraintStart_toEndOf="@+id/movie_image"
-            app:layout_constraintTop_toBottomOf="@+id/movie_production_countries_text" />
+            app:layout_constraintStart_toEndOf="@+id/movie_poster_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/movie_production_countries_text_view" />
 
         <TextView
             android:id="@+id/movie_genres_text"
@@ -162,50 +161,50 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@+id/movie_genres_caption_text"
-            app:layout_constraintTop_toBottomOf="@+id/movie_production_countries_text"
+            app:layout_constraintStart_toEndOf="@+id/movie_genres_caption_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/movie_production_countries_text_view"
             tools:text="Horror, Fantasy, Action" />
 
         <TextView
-            android:id="@+id/movie_keywords_caption_text"
+            android:id="@+id/movie_keywords_caption_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/keywords"
-            app:layout_constraintStart_toEndOf="@+id/movie_image"
+            app:layout_constraintStart_toEndOf="@+id/movie_poster_image_view"
             app:layout_constraintTop_toBottomOf="@+id/movie_genres_text" />
 
         <TextView
-            android:id="@+id/movie_keywords_text"
+            android:id="@+id/movie_keywords_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@+id/movie_keywords_caption_text"
+            app:layout_constraintStart_toEndOf="@+id/movie_keywords_caption_text_view"
             app:layout_constraintTop_toBottomOf="@+id/movie_genres_text"
             tools:text="some keywords, bla-bla-bla" />
 
         <TextView
-            android:id="@+id/movie_overview_text"
+            android:id="@+id/movie_overview_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_keywords_text"
+            app:layout_constraintTop_toBottomOf="@+id/movie_keywords_text_view"
             tools:text="Overview for movie" />
 
         <TextView
-            android:id="@+id/movie_credits_caption_text"
+            android:id="@+id/movie_credits_caption_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_overview_text"
+            app:layout_constraintTop_toBottomOf="@+id/movie_overview_text_view"
             android:text="@string/credits" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

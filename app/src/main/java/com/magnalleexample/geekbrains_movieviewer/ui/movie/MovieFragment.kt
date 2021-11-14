@@ -26,6 +26,7 @@ class MovieFragment : Fragment() {
         val arguments = MovieFragmentArgs.fromBundle(requireArguments())
         binding.movieData = arguments.movieData
         binding.viewModel = viewModel
+        binding.movieTitleTextView.text = arguments.movieData.name
         return binding.root
     }
 
