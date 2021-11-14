@@ -7,9 +7,13 @@ import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
 import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
 
 class HomeInterface {
+    interface View{
+        fun navigateToMovieData(movieData: MovieData?)
+    }
     interface ViewModel{
         val genresList : List<Genre>
         val watchList : MutableLiveData<List<MovieData>>
         val favorites : MutableLiveData<List<MovieData>>
+        fun getGenresFormatted() : List<String>
     }
 }

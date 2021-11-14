@@ -16,12 +16,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.magnalleexample.geekbrains_movieviewer.R
 import com.magnalleexample.geekbrains_movieviewer.databinding.HomeFragmentBinding
+import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
 import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
 import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieDataListener
 import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieListAdapter
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment() , HomeInterface.View {
 
     private lateinit var viewModel: HomeViewModel
     companion object {
@@ -42,22 +43,24 @@ class HomeFragment : Fragment() {
 
         val spinnerAdapter: ArrayAdapter<String> =
             ArrayAdapter<String>(application.applicationContext, android.R.layout.simple_spinner_item,
-                listOf("All genres").plus(Repo.genres.map { it.name }))
+                viewModel.getGenresFormatted())
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.genresSpinner.setAdapter(spinnerAdapter)
+        binding.genresSpinner.adapter = spinnerAdapter
 
-//        binding.genresSpinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>,
-//                view: View,
-//                position: Int,
-//                id: Long
-//            ) {
-//                val item = parent.getItemAtPosition(position) as String
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {}
-//        })
+        binding.genresSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                // TODO
+                //val item = viewModel.getGenresFormatted().get(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
 
         val watchListAdapter = MovieListAdapter(MovieDataListener{
             viewModel.onMovieClicked(it)
@@ -82,14 +85,18 @@ class HomeFragment : Fragment() {
         })
 
         viewModel.navigateToMovieData.observe(viewLifecycleOwner, Observer { movieData ->
-            movieData?.let {
-                this.findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToMovieFragment(movieData))
-                viewModel.doneNavigating()
-            }
+            navigateToMovieData(movieData)
         })
 
         return binding.root
+    }
+
+    override fun navigateToMovieData(movieData: MovieData?) {
+        movieData?.let {
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToMovieFragment(movieData))
+            viewModel.doneNavigating()
+        }
     }
 
 }

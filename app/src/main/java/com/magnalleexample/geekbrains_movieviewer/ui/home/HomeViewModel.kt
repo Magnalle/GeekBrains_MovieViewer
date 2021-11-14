@@ -12,6 +12,9 @@ class HomeViewModel : ViewModel() , HomeInterface.ViewModel{
     override val genresList : List<Genre> = MoviesApiService.getGenres()
     override val watchList : MutableLiveData<List<MovieData>> = MutableLiveData(Repo.watchList)
     override val favorites : MutableLiveData<List<MovieData>> = MutableLiveData(Repo.favorites)
+    override fun getGenresFormatted(): List<String> {
+        return listOf("All genres").plus(genresList.map { it.name })
+    }
 
     private var _navigateToMovieData = MutableLiveData<MovieData?>()
     val navigateToMovieData
