@@ -8,12 +8,10 @@ import com.magnalleexample.geekbrains_movieviewer.domain.entity.Genre
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
 import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
 
-class HomeViewModel : ViewModel() {
-    val genresList : List<Genre> = MoviesApiService.getGenres()
-    val watchList : MutableLiveData<List<MovieData>> = MutableLiveData(Repo.watchList)
-    val favorites : MutableLiveData<List<MovieData>> = MutableLiveData(Repo.favorites)
-
-    var _response = MutableLiveData<String>()
+class HomeViewModel : ViewModel() , HomeInterface.ViewModel{
+    override val genresList : List<Genre> = MoviesApiService.getGenres()
+    override val watchList : MutableLiveData<List<MovieData>> = MutableLiveData(Repo.watchList)
+    override val favorites : MutableLiveData<List<MovieData>> = MutableLiveData(Repo.favorites)
 
     private var _navigateToMovieData = MutableLiveData<MovieData?>()
     val navigateToMovieData

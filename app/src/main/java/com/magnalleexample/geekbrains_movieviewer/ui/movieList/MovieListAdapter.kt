@@ -42,7 +42,10 @@ class MovieListAdapter(val clickListener : MovieDataListener): ListAdapter<Movie
         }
         fun bind(movieData: MovieData, clickListener : MovieDataListener){
             binding.movieData = movieData
-            binding.clickListener = clickListener
+            binding.movieDataCardView.setOnClickListener { clickListener.onClick(movieData) }
+            binding.ratingTextView.text = movieData.rating.toString()
+            binding.yearTextView.text = movieData.year.toString()
+            binding.titleTextView.text = movieData.name;
             binding.executePendingBindings()
         }
     }

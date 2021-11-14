@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
             viewModel.onMovieClicked(it)
         })
         binding.favoritesRecyclerView.adapter = favoritesAdapter
-        binding.favoritesRecyclerView.layoutManager = LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false)
+        binding.favoritesRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         viewModel.favorites.observe(viewLifecycleOwner, Observer {
             it?.let{
                 favoritesAdapter.submitList(it)
