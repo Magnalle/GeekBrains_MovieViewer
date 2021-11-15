@@ -19,4 +19,9 @@ object Repo {
 
     val genres : List<Genre>
         get() = MoviesApiService.getGenres()
+
+    fun addToWatchlist(movie : MovieData){
+        _watchList.add(movie)
+        MoviesApiService.addToFavorites(movie)
+    }
 }
