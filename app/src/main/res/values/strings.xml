@@ -10,4 +10,7 @@
     <string name="country">Country:</string>
     <string name="movie_image">Movie image</string>
     <string name="credits">Credits:</string>
+    <string name="home">Home:</string>
+    <string name="top">TOP</string>
+    <string name="search">Search</string>
 </resources>

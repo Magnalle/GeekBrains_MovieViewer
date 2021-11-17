@@ -4,9 +4,10 @@ import java.io.Serializable
 
 
 data class MovieData(
-    val id: Int,
+    val id: Long,
     val name: String,
     val rating: Double,
     val imageURL:String,
-    val year: Int
+    val year: String,
+    val genres: List<Genre>
 ) : Serializable

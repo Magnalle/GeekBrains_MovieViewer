@@ -3,20 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/navigation_home">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/navigation_home"
         android:name="com.magnalleexample.geekbrains_movieviewer.ui.home.HomeFragment"
         android:label="HomeFragment" >
         <action
-            android:id="@+id/action_homeFragment_to_movieFragment"
-            app:destination="@id/movieFragment"
+            android:id="@+id/action_home_to_movie_details"
+            app:destination="@id/navigation_movie_details"
             app:enterAnim="@anim/slide_in_right"
             app:popEnterAnim="@anim/slide_in_right" />
     </fragment>
+
     <fragment
-        android:id="@+id/movieFragment"
+        android:id="@+id/navigation_top"
+        android:name="com.magnalleexample.geekbrains_movieviewer.ui.movie.MovieFragment"
+        android:label="top_fragment"
+        tools:layout="@layout/movie_fragment" >
+        <action
+            android:id="@+id/action_navigation_top_to_navigation_movie_details"
+            app:destination="@id/navigation_movie_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_movie_details"
         android:name="com.magnalleexample.geekbrains_movieviewer.ui.movie.MovieFragment"
         android:label="movie_fragment"
         tools:layout="@layout/movie_fragment" >
@@ -24,7 +34,10 @@
             android:name="movieData"
             app:argType="com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData" />
         <action
-            android:id="@+id/action_movieFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_movie_details_to_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_movie_details_to_navigation_top"
+            app:destination="@id/navigation_top" />
     </fragment>
 </navigation>

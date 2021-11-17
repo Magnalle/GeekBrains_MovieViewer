@@ -1,7 +1,6 @@
 package com.magnalleexample.geekbrains_movieviewer.ui.home
 
 import android.os.Bundle
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.make
 import com.magnalleexample.geekbrains_movieviewer.R
+import com.magnalleexample.geekbrains_movieviewer.app
 import com.magnalleexample.geekbrains_movieviewer.databinding.HomeFragmentBinding
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
-import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
 import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieDataListener
 import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieListAdapter
 
@@ -31,10 +29,6 @@ class HomeFragment : Fragment() , HomeInterface.View {
         fun newInstance() = HomeFragment()
     }
 
-    fun View.showSelectedGenre(genre: String){
-        make(this, genre, Snackbar.LENGTH_INDEFINITE).show()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +38,8 @@ class HomeFragment : Fragment() , HomeInterface.View {
             inflater, R.layout.home_fragment, container, false
         )
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        viewModel.repo = application.app.repository
+        viewModel.loadData()
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -62,7 +58,6 @@ class HomeFragment : Fragment() , HomeInterface.View {
             ) {
                 // TODO
                 val item = viewModel.getGenresFormatted().get(position)
-                binding.genresSpinner.showSelectedGenre(item)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -74,7 +69,7 @@ class HomeFragment : Fragment() , HomeInterface.View {
         })
         binding.watchListRecyclerView.adapter = watchListAdapter
         binding.watchListRecyclerView.layoutManager = LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false)
-        viewModel.watchList.observe(viewLifecycleOwner, Observer {
+        viewModel.watchList?.observe(viewLifecycleOwner, Observer {
             it?.let{
                 watchListAdapter.submitList(it)
             }
@@ -85,7 +80,7 @@ class HomeFragment : Fragment() , HomeInterface.View {
         })
         binding.favoritesRecyclerView.adapter = favoritesAdapter
         binding.favoritesRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        viewModel.favorites.observe(viewLifecycleOwner, Observer {
+        viewModel.favorites?.observe(viewLifecycleOwner, Observer {
             it?.let{
                 favoritesAdapter.submitList(it)
             }
@@ -101,7 +96,7 @@ class HomeFragment : Fragment() , HomeInterface.View {
     override fun navigateToMovieData(movieData: MovieData?) {
         movieData?.let {
             findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToMovieFragment(movieData))
+                HomeFragmentDirections.actionHomeToMovieDetails(movieData))
             viewModel.doneNavigating()
         }
     }

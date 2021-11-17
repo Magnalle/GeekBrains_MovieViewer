@@ -8,10 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.magnalleexample.geekbrains_movieviewer.R
+import com.magnalleexample.geekbrains_movieviewer.app
 import com.magnalleexample.geekbrains_movieviewer.databinding.MovieFragmentBinding
+import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
 
 class MovieFragment : Fragment() {
-
     companion object {
         fun newInstance() = MovieFragment()
     }
@@ -26,6 +27,8 @@ class MovieFragment : Fragment() {
         val arguments = MovieFragmentArgs.fromBundle(requireArguments())
         binding.movieData = arguments.movieData
         binding.viewModel = viewModel
+        val application = requireNotNull(this.activity).application
+        viewModel.repo = application.app.repository
         binding.movieTitleTextView.text = arguments.movieData.name
         return binding.root
     }
