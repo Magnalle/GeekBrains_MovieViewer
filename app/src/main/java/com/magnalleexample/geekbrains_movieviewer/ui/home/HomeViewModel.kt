@@ -19,9 +19,24 @@ class HomeViewModel : ViewModel() , HomeInterface.ViewModel{
 
     fun loadData(){
         viewModelScope.launch(Dispatchers.IO) {
-            genresList.value = repo.getGenresList()
-            watchList.value = repo.getWatchList()
-            favorites.value = repo.getFavoritesList()
+            val temp = repo.getGenresList()
+            viewModelScope.launch(Dispatchers.Main) {
+                genresList.value = temp
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val temp = repo.getWatchList()
+            viewModelScope.launch(Dispatchers.Main) {
+                watchList.value = temp
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val temp = repo.getFavoritesList()
+            viewModelScope.launch(Dispatchers.Main) {
+                favorites.value = temp
+            }
         }
     }
 

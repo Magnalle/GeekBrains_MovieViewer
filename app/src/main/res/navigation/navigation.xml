@@ -18,12 +18,14 @@
 
     <fragment
         android:id="@+id/navigation_top"
-        android:name="com.magnalleexample.geekbrains_movieviewer.ui.movie.MovieFragment"
+        android:name="com.magnalleexample.geekbrains_movieviewer.ui.top.TopFragment"
         android:label="top_fragment"
-        tools:layout="@layout/movie_fragment" >
+        tools:layout="@layout/top_fragment" >
         <action
             android:id="@+id/action_navigation_top_to_navigation_movie_details"
-            app:destination="@id/navigation_movie_details" />
+            app:destination="@id/navigation_movie_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_right" />
     </fragment>
     <fragment
         android:id="@+id/navigation_movie_details"

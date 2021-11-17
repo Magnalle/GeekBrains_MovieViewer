@@ -62,6 +62,15 @@ class HomeFragment : Fragment() , HomeInterface.View {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+        viewModel.genresList.observe(viewLifecycleOwner, Observer {value->
+            value?.let{ value ->
+                val genreList = viewModel.getGenresFormatted()
+                spinnerAdapter.clear()
+                genreList.forEach{
+                    spinnerAdapter.add(it)
+                }
+            }
+        })
 
 
         val watchListAdapter = MovieListAdapter(MovieDataListener{
@@ -80,6 +89,7 @@ class HomeFragment : Fragment() , HomeInterface.View {
         })
         binding.favoritesRecyclerView.adapter = favoritesAdapter
         binding.favoritesRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
         viewModel.favorites?.observe(viewLifecycleOwner, Observer {
             it?.let{
                 favoritesAdapter.submitList(it)
