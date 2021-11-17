@@ -9,7 +9,7 @@ data class MovieDataFromApi(
     val popularity : Double,
     val overview : String,
     val release_date : String,
-    val genre_ids : Array<Genre>,
+    val genre_ids : Array<Int>,
     val poster_path : String
 ) {
     override fun equals(other: Any?): Boolean {

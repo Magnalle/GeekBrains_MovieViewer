@@ -75,8 +75,8 @@ class MoviesApiService : Repo {
             result = gson.fromJson(bufferedReader,
                 object{
                     var page: Long = 1
-                    var result : Array<MovieDataFromApi>? = null
-                }::class.java).result?.map { movieDataFromApi ->
+                    var results : Array<MovieDataFromApi>? = null
+                }::class.java).results?.map { movieDataFromApi ->
                     MovieData(
                         movieDataFromApi.id,
                         movieDataFromApi.original_title,
@@ -84,7 +84,7 @@ class MoviesApiService : Repo {
                         movieDataFromApi.poster_path,
                         movieDataFromApi.release_date,
                         movieDataFromApi.genre_ids.mapNotNull {
-                                genreId -> repo.getGenresList().find { it.id == genreId.id }
+                                genreId -> repo.getGenresList().find { it.id == genreId }
                         })
                 }?.toList() ?: listOf()
         }

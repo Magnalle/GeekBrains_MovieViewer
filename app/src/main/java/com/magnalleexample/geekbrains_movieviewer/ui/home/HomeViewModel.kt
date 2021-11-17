@@ -13,9 +13,9 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() , HomeInterface.ViewModel{
     lateinit var repo : Repo
-    override var genresList : MutableLiveData<List<Genre>> = MutableLiveData()
-    override var watchList : MutableLiveData<List<MovieData>> = MutableLiveData()
-    override var favorites : MutableLiveData<List<MovieData>> = MutableLiveData()
+    override val genresList : MutableLiveData<List<Genre>> = MutableLiveData()
+    override val watchList : MutableLiveData<List<MovieData>> = MutableLiveData()
+    override val favorites : MutableLiveData<List<MovieData>> = MutableLiveData()
 
     fun loadData(){
         viewModelScope.launch(Dispatchers.IO) {

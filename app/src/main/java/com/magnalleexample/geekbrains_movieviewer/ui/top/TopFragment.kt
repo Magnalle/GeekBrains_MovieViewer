@@ -33,10 +33,11 @@ class TopFragment : Fragment() {
     ): View? {
         val application = requireNotNull(this.activity).application
         val binding : TopFragmentBinding = DataBindingUtil.inflate(
-            inflater, R.layout.home_fragment, container, false
+            inflater, R.layout.top_fragment, container, false
         )
         viewModel = ViewModelProvider(this).get(TopViewModel::class.java)
         viewModel.repo = application.app.repository
+        viewModel.loadData()
         binding.lifecycleOwner = this
 
         val topListAdapter = MovieListAdapter(MovieDataListener{
