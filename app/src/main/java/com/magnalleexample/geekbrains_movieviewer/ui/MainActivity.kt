@@ -10,10 +10,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.magnalleexample.geekbrains_movieviewer.R
 import com.magnalleexample.geekbrains_movieviewer.databinding.MainActivityBinding
 import com.magnalleexample.geekbrains_movieviewer.ui.home.HomeFragment
+import android.net.ConnectivityManager
+
+import android.content.IntentFilter
+import com.magnalleexample.geekbrains_movieviewer.MyReceiver
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: MainActivityBinding
+    val myReceiver: MyReceiver = MyReceiver()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,5 +38,11 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        registerReceiver(myReceiver, filter)
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(myReceiver)
     }
 }
