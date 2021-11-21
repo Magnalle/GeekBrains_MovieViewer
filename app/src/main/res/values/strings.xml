@@ -13,4 +13,6 @@
     <string name="home">Home:</string>
     <string name="top">TOP</string>
     <string name="search">Search</string>
+    <string name="sort_by_rating">Sort by rating</string>
+    <string name="sort_by_popularity">Sort by popularity</string>
 </resources>
