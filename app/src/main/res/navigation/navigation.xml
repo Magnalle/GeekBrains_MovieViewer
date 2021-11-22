@@ -42,4 +42,9 @@
             android:id="@+id/action_navigation_movie_details_to_navigation_top"
             app:destination="@id/navigation_top" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_log"
+        android:name="com.magnalleexample.geekbrains_movieviewer.LogFragment"
+        android:label="fragment_log"
+        tools:layout="@layout/fragment_log" />
 </navigation>

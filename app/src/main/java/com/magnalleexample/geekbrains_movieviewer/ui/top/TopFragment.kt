@@ -20,6 +20,7 @@ import com.magnalleexample.geekbrains_movieviewer.app
 import com.magnalleexample.geekbrains_movieviewer.databinding.HomeFragmentBinding
 import com.magnalleexample.geekbrains_movieviewer.databinding.TopFragmentBinding
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
+import com.magnalleexample.geekbrains_movieviewer.log
 import com.magnalleexample.geekbrains_movieviewer.ui.home.HomeFragmentDirections
 import com.magnalleexample.geekbrains_movieviewer.ui.home.HomeViewModel
 import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieDataListener
@@ -45,6 +46,7 @@ class TopFragment : Fragment() {
         viewModel.repo = application.app.repository
         viewModel.loadData()
         binding.lifecycleOwner = this
+        application.log("Open top")
 
         val spinnerAdapter: ArrayAdapter<String> =
             ArrayAdapter<String>(application.applicationContext, android.R.layout.simple_spinner_item,
@@ -61,6 +63,7 @@ class TopFragment : Fragment() {
             ) {
                 // TODO
                 val item = viewModel.getGenresFormatted().get(position)
+                application.log("Chosen $item genre")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -88,6 +91,7 @@ class TopFragment : Fragment() {
         })
         viewModel.navigateToMovieData.observe(viewLifecycleOwner, Observer { movieData ->
             navigateToMovieData(movieData)
+            application.log("Go to movie $movieData")
         })
         return binding.root
     }

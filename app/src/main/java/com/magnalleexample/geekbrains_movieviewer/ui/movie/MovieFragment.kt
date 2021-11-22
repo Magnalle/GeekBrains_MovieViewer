@@ -11,6 +11,7 @@ import com.magnalleexample.geekbrains_movieviewer.R
 import com.magnalleexample.geekbrains_movieviewer.app
 import com.magnalleexample.geekbrains_movieviewer.databinding.MovieFragmentBinding
 import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
+import com.magnalleexample.geekbrains_movieviewer.log
 
 class MovieFragment : Fragment() {
     companion object {
@@ -30,6 +31,7 @@ class MovieFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         viewModel.repo = application.app.repository
         binding.movieTitleTextView.text = arguments.movieData.name
+        application.log("Open movie $arguments.movieData")
         return binding.root
     }
 
