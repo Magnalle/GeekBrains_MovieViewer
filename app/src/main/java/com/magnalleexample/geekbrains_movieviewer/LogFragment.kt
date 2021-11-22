@@ -20,24 +20,23 @@ private const val ARG_PARAM2 = "param2"
  */
 class LogFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_log, container, false)
         val text = view.findViewById<TextView>(R.id.log_text_view)
-        text?.setMovementMethod(ScrollingMovementMethod())
+        text?.movementMethod = ScrollingMovementMethod()
+        context?.app?.unBindLog()
         text?.text = context?.openFileInput("log.txt")?.let {
-            val result = it.bufferedReader()?.readText().toString()
+            val result = it.bufferedReader().readText().toString()
             it.close()
             result
         }
+        context?.app?.bindLog()
         // Inflate the layout for this fragment
         return view
     }
+
 
 }

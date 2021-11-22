@@ -9,7 +9,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.magnalleexample.geekbrains_movieviewer.R
 import com.magnalleexample.geekbrains_movieviewer.databinding.MainActivityBinding
 import com.magnalleexample.geekbrains_movieviewer.ui.home.HomeFragment
 import android.net.ConnectivityManager
@@ -17,9 +16,7 @@ import android.net.ConnectivityManager
 import android.content.IntentFilter
 import android.content.ServiceConnection
 import android.os.IBinder
-import com.magnalleexample.geekbrains_movieviewer.LogService
-import com.magnalleexample.geekbrains_movieviewer.MyReceiver
-import com.magnalleexample.geekbrains_movieviewer.app
+import com.magnalleexample.geekbrains_movieviewer.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -52,15 +49,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val serviceIntent = Intent(this, LogService::class.java)
-        bindService(serviceIntent, application.app.connection, BIND_AUTO_CREATE)
+        app.bindLog()
     }
 
     override fun onStop() {
         super.onStop()
-        unbindService(application.app.connection)
+        app.unBindLog()
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
