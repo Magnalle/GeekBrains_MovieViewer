@@ -10,4 +10,7 @@
         android:id="@+id/navigation_top"
         android:title="@string/top" />
 
+    <item
+        android:id="@+id/navigation_log"
+        android:title="@string/log" />
 </menu>

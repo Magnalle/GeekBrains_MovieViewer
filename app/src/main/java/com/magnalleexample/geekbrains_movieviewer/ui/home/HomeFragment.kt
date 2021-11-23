@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,6 +19,7 @@ import com.magnalleexample.geekbrains_movieviewer.R
 import com.magnalleexample.geekbrains_movieviewer.app
 import com.magnalleexample.geekbrains_movieviewer.databinding.HomeFragmentBinding
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
+import com.magnalleexample.geekbrains_movieviewer.log
 import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieDataListener
 import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieListAdapter
 
@@ -42,6 +44,7 @@ class HomeFragment : Fragment() , HomeInterface.View {
         viewModel.loadData()
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        application.log("Open home")
 
         val spinnerAdapter: ArrayAdapter<String> =
             ArrayAdapter<String>(application.applicationContext, android.R.layout.simple_spinner_item,
@@ -58,6 +61,7 @@ class HomeFragment : Fragment() , HomeInterface.View {
             ) {
                 // TODO
                 val item = viewModel.getGenresFormatted().get(position)
+                application.log("Chosen $item genre")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -98,6 +102,7 @@ class HomeFragment : Fragment() , HomeInterface.View {
 
         viewModel.navigateToMovieData.observe(viewLifecycleOwner, Observer { movieData ->
             navigateToMovieData(movieData)
+            application.log("Go to movie $movieData")
         })
 
         return binding.root
@@ -110,5 +115,4 @@ class HomeFragment : Fragment() , HomeInterface.View {
             viewModel.doneNavigating()
         }
     }
-
 }
