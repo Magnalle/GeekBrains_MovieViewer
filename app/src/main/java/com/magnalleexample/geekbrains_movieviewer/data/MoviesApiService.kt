@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.Genre
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.Language
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
-import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieDataFromApi
 import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
 import java.io.BufferedReader
 import java.io.InputStreamReader

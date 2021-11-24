@@ -1,4 +1,4 @@
-package com.magnalleexample.geekbrains_movieviewer.domain.entity
+package com.magnalleexample.geekbrains_movieviewer.data
 
 data class MovieDataFromApi(
     val id: Long,
