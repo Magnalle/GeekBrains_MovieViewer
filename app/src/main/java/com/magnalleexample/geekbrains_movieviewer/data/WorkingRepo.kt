@@ -6,7 +6,8 @@ import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
 import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
 
 class WorkingRepo : Repo {
-    val moviesApiService : MoviesApiService by lazy {MoviesApiService()}
+    //val moviesApiService : MoviesApiService by lazy {MoviesApiService()}
+    val moviesApiService : RetrofitMoviesService by lazy {RetrofitMoviesService()}
     private var _languagesList : List<Language>? = null
     private var _genresList : List<Genre>? = null
     override fun getWatchList(): List<MovieData> {
