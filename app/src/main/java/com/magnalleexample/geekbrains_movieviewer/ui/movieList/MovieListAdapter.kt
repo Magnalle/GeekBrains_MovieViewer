@@ -55,7 +55,7 @@ class MovieListAdapter(val clickListener : MovieDataListener): ListAdapter<Movie
             Glide
                 .with(binding.root)
                 .load(IMAGE_URL)
-                .centerCrop()
+                .fitCenter()
                 .placeholder(CircularProgressDrawable(binding.root.context).let {
                     it.start()
                     it})
