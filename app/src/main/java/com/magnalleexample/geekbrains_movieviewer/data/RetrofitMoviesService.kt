@@ -9,13 +9,9 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val API_KEY = "72d61a641a885a2d08c44fe3958ff576"
-const val API_URL_STRING = "https://api.themoviedb.org/"
-const val API_TOP_SORT = "popularity.desc"
-
 class RetrofitMoviesService : Repo {
     private val retrofit = Retrofit.Builder()
-        .baseUrl(API_URL_STRING)
+        .baseUrl(Repo.API_URL_STRING)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -29,15 +25,15 @@ class RetrofitMoviesService : Repo {
     }
 
     override fun getLanguagesList(): List<Language> {
-        return api.getLanguages(API_KEY).execute().body() ?: emptyList()
+        return api.getLanguages(Repo.API_KEY).execute().body() ?: emptyList()
     }
 
     override fun getGenresList(): List<Genre> {
-        return api.getGenres(API_KEY).execute().body()?.genres ?: emptyList()
+        return api.getGenres(Repo.API_KEY).execute().body()?.genres ?: emptyList()
     }
 
     override fun getTopList(repo: Repo): List<MovieData> {
-        return api.getTop(API_KEY, API_TOP_SORT).execute().body()?.results?.map { movieDataFromApi ->
+        return api.getTop(Repo.API_KEY, Repo.API_TOP_SORT).execute().body()?.results?.map { movieDataFromApi ->
             MovieData(
                 movieDataFromApi.id,
                 movieDataFromApi.original_title,

@@ -5,8 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.bumptech.glide.Glide
+import com.magnalleexample.geekbrains_movieviewer.R
 import com.magnalleexample.geekbrains_movieviewer.databinding.ListItemMovieViewBinding
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
+import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
 
 class MovieListAdapter(val clickListener : MovieDataListener): ListAdapter<MovieData, RecyclerView.ViewHolder>(DiffCallback)  {
     companion object DiffCallback : DiffUtil.ItemCallback<MovieData>(){
@@ -41,11 +45,22 @@ class MovieListAdapter(val clickListener : MovieDataListener): ListAdapter<Movie
             }
         }
         fun bind(movieData: MovieData, clickListener : MovieDataListener){
+            val IMAGE_URL = "https://image.tmdb.org/t/p/original${movieData.imageURL}?api_key=${Repo.API_KEY}"
             binding.movieData = movieData
             binding.movieDataCardView.setOnClickListener { clickListener.onClick(movieData) }
             binding.ratingTextView.text = movieData.rating.toString()
             binding.yearTextView.text = movieData.year.toString()
-            binding.titleTextView.text = movieData.name;
+            binding.titleTextView.text = movieData.name
+
+            Glide
+                .with(binding.root)
+                .load(IMAGE_URL)
+                .centerCrop()
+                .placeholder(CircularProgressDrawable(binding.root.context).let {
+                    it.start()
+                    it})
+                .into(binding.posterImageView)
+
             binding.executePendingBindings()
         }
     }
