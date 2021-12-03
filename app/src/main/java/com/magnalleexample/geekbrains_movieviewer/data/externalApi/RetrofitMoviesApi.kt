@@ -1,7 +1,7 @@
-package com.magnalleexample.geekbrains_movieviewer.data.Retrofit
+package com.magnalleexample.geekbrains_movieviewer.data.externalApi
 
-import com.magnalleexample.geekbrains_movieviewer.data.GenresFromApi
-import com.magnalleexample.geekbrains_movieviewer.data.TopFromApi
+import com.magnalleexample.geekbrains_movieviewer.data.helperDataClasses.Retrofit.GenresFromApi
+import com.magnalleexample.geekbrains_movieviewer.data.helperDataClasses.Retrofit.TopFromApi
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.Language
 import retrofit2.Call
 import retrofit2.http.GET
@@ -18,6 +18,13 @@ interface RetrofitMoviesApi {
         @Query("api_key") apiKey : String,
         @Query("sort_by") sortBy : String
         ) : Call<TopFromApi>
+    @GET("3/discover/movie")
+    fun getTop(
+        @Query("api_key") apiKey : String,
+        @Query("sort_by") sortBy : String,
+        @Query("include_adult") includeAdult : Boolean,
+        @Query("language") language : String
+    ) : Call<TopFromApi>
 
 
 }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -77,8 +78,8 @@ class HomeFragment : Fragment() , HomeInterface.View {
             viewModel.onMovieClicked(it)
         })
         binding.watchListRecyclerView.adapter = watchListAdapter
-        binding.watchListRecyclerView.layoutManager = LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false)
-        viewModel.watchList?.observe(viewLifecycleOwner, Observer {
+        binding.watchListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        viewModel.watchList.observe(viewLifecycleOwner, Observer {
             it?.let{
                 watchListAdapter.submitList(it)
             }
@@ -90,7 +91,7 @@ class HomeFragment : Fragment() , HomeInterface.View {
         binding.favoritesRecyclerView.adapter = favoritesAdapter
         binding.favoritesRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
-        viewModel.favorites?.observe(viewLifecycleOwner, Observer {
+        viewModel.favorites.observe(viewLifecycleOwner, Observer {
             it?.let{
                 favoritesAdapter.submitList(it)
             }
@@ -98,6 +99,14 @@ class HomeFragment : Fragment() , HomeInterface.View {
 
         viewModel.navigateToMovieData.observe(viewLifecycleOwner, Observer { movieData ->
             navigateToMovieData(movieData)
+        })
+
+
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer{
+           it?.let {
+               viewModel.disableError()
+               Toast.makeText(this.context, it, Toast.LENGTH_LONG).show()
+           }
         })
 
         return binding.root

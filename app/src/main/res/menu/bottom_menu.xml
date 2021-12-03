@@ -10,4 +10,8 @@
         android:id="@+id/navigation_top"
         android:title="@string/top" />
 
+    <item
+        android:id="@+id/navigation_settings"
+        android:title="@string/settings" />
+
 </menu>
