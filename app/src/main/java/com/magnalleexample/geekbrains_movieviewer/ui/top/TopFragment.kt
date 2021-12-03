@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.GridLayout.HORIZONTAL
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -42,6 +43,7 @@ class TopFragment : Fragment() {
             inflater, R.layout.top_fragment, container, false
         )
         viewModel = ViewModelProvider(this).get(TopViewModel::class.java)
+        viewModel.sharedPreferences = application.app.sharedPreferences
         viewModel.repo = application.app.repository
         viewModel.loadData()
         binding.lifecycleOwner = this
@@ -80,7 +82,7 @@ class TopFragment : Fragment() {
         })
         binding.topListRecyclerView.adapter = topListAdapter
         //binding.topListRecyclerView.layoutManager = GridLayoutManager(getActivity(), 3, RecyclerView.VERTICAL, false)
-        binding.topListRecyclerView.layoutManager = LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false)
+        binding.topListRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         viewModel.topList.observe(viewLifecycleOwner, Observer {
             it?.let{
                 topListAdapter.submitList(it)
@@ -89,6 +91,14 @@ class TopFragment : Fragment() {
         viewModel.navigateToMovieData.observe(viewLifecycleOwner, Observer { movieData ->
             navigateToMovieData(movieData)
         })
+
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer{
+            it?.let {
+                viewModel.disableError()
+                Toast.makeText(this.context, it, Toast.LENGTH_LONG).show()
+            }
+        })
+
         return binding.root
     }
 

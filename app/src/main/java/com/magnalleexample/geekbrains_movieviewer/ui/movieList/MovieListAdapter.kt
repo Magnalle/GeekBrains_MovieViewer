@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
-import com.magnalleexample.geekbrains_movieviewer.R
 import com.magnalleexample.geekbrains_movieviewer.databinding.ListItemMovieViewBinding
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
 import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 
 class MovieListAdapter(val clickListener : MovieDataListener): ListAdapter<MovieData, RecyclerView.ViewHolder>(DiffCallback)  {
     companion object DiffCallback : DiffUtil.ItemCallback<MovieData>(){
@@ -49,7 +50,8 @@ class MovieListAdapter(val clickListener : MovieDataListener): ListAdapter<Movie
             binding.movieData = movieData
             binding.movieDataCardView.setOnClickListener { clickListener.onClick(movieData) }
             binding.ratingTextView.text = movieData.rating.toString()
-            binding.yearTextView.text = movieData.year.toString()
+            val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy")
+            binding.yearTextView.text = simpleDateFormat.format(movieData.releaseDate)
             binding.titleTextView.text = movieData.name
 
             Glide

@@ -42,4 +42,8 @@
             android:id="@+id/action_navigation_movie_details_to_navigation_top"
             app:destination="@id/navigation_top" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.magnalleexample.geekbrains_movieviewer.ui.Settings.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

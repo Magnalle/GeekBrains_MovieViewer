@@ -1,0 +1,20 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/movies_content">
+
+        <SwitchPreferenceCompat
+            app:key="enableAdult_switch"
+            app:summaryOff="@string/disabled"
+            app:summaryOn="@string/enabled"
+            app:title="@string/adult_content" />
+
+        <MultiSelectListPreference
+            app:enabled="false"
+            app:title="@string/languages"
+            app:summary="@string/languages_summary"
+            app:key="languages_multi_select_list">
+        </MultiSelectListPreference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

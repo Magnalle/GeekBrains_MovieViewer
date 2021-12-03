@@ -1,4 +1,4 @@
-package com.magnalleexample.geekbrains_movieviewer.data
+package com.magnalleexample.geekbrains_movieviewer.data.helperDataClasses.Retrofit
 
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.Genre
 

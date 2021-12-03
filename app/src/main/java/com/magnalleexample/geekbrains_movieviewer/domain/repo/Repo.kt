@@ -14,5 +14,8 @@ interface Repo {
     fun getFavoritesList() : List<MovieData>
     fun getLanguagesList() : List<Language>
     fun getGenresList() : List<Genre>
-    fun getTopList(repo: Repo) : List<MovieData>
+    fun getTopList(repo: Repo, enableAdult: Boolean = false, languages: List<Language>? = null): List<MovieData>
+    fun synchMovieData(movieData: MovieData)
+    fun setMovieInWatchList(movieData: MovieData, movieInWatchList : Boolean)
+    fun setMovieInFavorites(movieData: MovieData, movieInFavorites : Boolean)
 }

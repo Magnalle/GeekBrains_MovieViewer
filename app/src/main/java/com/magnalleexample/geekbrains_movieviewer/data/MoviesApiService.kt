@@ -1,6 +1,7 @@
 package com.magnalleexample.geekbrains_movieviewer.data
 
 import com.google.gson.Gson
+import com.magnalleexample.geekbrains_movieviewer.data.helperDataClasses.Retrofit.MovieDataFromApi
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.Genre
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.Language
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
@@ -9,6 +10,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.text.SimpleDateFormat
 
 class MoviesApiService : Repo {
     val apiKey = "72d61a641a885a2d08c44fe3958ff576"
@@ -61,7 +63,7 @@ class MoviesApiService : Repo {
         return result
     }
 
-    override fun getTopList(repo: Repo): List<MovieData> {
+    override fun getTopList(repo: Repo, enableAdult: Boolean, languages : List<Language>?): List<MovieData> {
         var connection : HttpURLConnection? = null
         var result : List<MovieData>
         try{
@@ -81,16 +83,27 @@ class MoviesApiService : Repo {
                         movieDataFromApi.original_title,
                         movieDataFromApi.vote_average,
                         movieDataFromApi.poster_path,
-                        movieDataFromApi.release_date,
+                        SimpleDateFormat("yyyy-MM-dd").parse(movieDataFromApi.release_date),
                         movieDataFromApi.genre_ids.mapNotNull {
                                 genreId -> repo.getGenresList().find { it.id == genreId }
-                        })
+                        },
+                        movieDataFromApi.overview
+                    )
                 }?.toList() ?: listOf()
         }
         finally {
             connection?.disconnect()
         }
         return result
+    }
+
+    override fun synchMovieData(movieData: MovieData) {
+    }
+
+    override fun setMovieInWatchList(movieData: MovieData, movieInWatchList: Boolean) {
+    }
+
+    override fun setMovieInFavorites(movieData: MovieData, movieInFavorites: Boolean) {
     }
 
 }

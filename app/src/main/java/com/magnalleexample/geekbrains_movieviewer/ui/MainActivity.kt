@@ -1,7 +1,7 @@
 package com.magnalleexample.geekbrains_movieviewer.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -9,7 +9,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.magnalleexample.geekbrains_movieviewer.R
 import com.magnalleexample.geekbrains_movieviewer.databinding.MainActivityBinding
-import com.magnalleexample.geekbrains_movieviewer.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_top
+                R.id.navigation_home, R.id.navigation_top, R.id.navigation_settings
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

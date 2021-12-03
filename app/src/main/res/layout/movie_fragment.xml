@@ -17,6 +17,30 @@
         android:layout_height="match_parent"
         tools:context=".ui.movie.MovieFragment">
 
+        <androidx.appcompat.widget.AppCompatToggleButton
+            android:id="@+id/add_remove_to_favorites_toggle_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#455A64"
+            android:textOff="@string/add_to_favorites"
+            android:textOn="@string/remove_from_favorites"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movie_poster_image_view" />
+
+        <androidx.appcompat.widget.AppCompatToggleButton
+            android:id="@+id/add_remove_to_watch_list_toggle_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#455A64"
+            android:textOff="@string/add_to_watch_list"
+            android:textOn="@string/remove_from_watch_list"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/vertical_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_remove_to_favorites_toggle_btn" />
+
         <ImageView
             android:id="@+id/movie_poster_image_view"
             android:layout_width="0dp"
@@ -37,14 +61,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.3" />
+            app:layout_constraintGuide_percent="0.4" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/vertical_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.3" />
+            app:layout_constraintGuide_percent="0.4" />
 
         <TextView
             android:id="@+id/movie_title_text_view"
@@ -76,7 +100,7 @@
             app:layout_constraintTop_toBottomOf="@+id/movie_title_text_view" />
 
         <TextView
-            android:id="@+id/movie_imdb_text"
+            android:id="@+id/movie_imdb_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -156,7 +180,7 @@
             app:layout_constraintTop_toBottomOf="@+id/movie_production_countries_text_view" />
 
         <TextView
-            android:id="@+id/movie_genres_text"
+            android:id="@+id/movie_genres_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -173,7 +197,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/keywords"
             app:layout_constraintStart_toEndOf="@+id/movie_poster_image_view"
-            app:layout_constraintTop_toBottomOf="@+id/movie_genres_text" />
+            app:layout_constraintTop_toBottomOf="@+id/movie_genres_text_view" />
 
         <TextView
             android:id="@+id/movie_keywords_text_view"
@@ -182,8 +206,15 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toEndOf="@+id/movie_keywords_caption_text_view"
-            app:layout_constraintTop_toBottomOf="@+id/movie_genres_text"
+            app:layout_constraintTop_toBottomOf="@+id/movie_genres_text_view"
             tools:text="some keywords, bla-bla-bla" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/labelBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="add_remove_to_watch_list_toggle_btn, movie_keywords_text_view" />
 
         <TextView
             android:id="@+id/movie_overview_text_view"
@@ -193,7 +224,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_keywords_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/labelBarrier"
             tools:text="Overview for movie" />
 
         <TextView
