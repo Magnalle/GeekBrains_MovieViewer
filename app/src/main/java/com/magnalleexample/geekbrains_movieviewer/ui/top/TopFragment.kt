@@ -1,46 +1,49 @@
-package com.magnalleexample.geekbrains_movieviewer.ui.home
+package com.magnalleexample.geekbrains_movieviewer.ui.top
 
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.GridLayout.HORIZONTAL
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.snackbar.Snackbar.make
+import androidx.recyclerview.widget.RecyclerView
 import com.magnalleexample.geekbrains_movieviewer.R
 import com.magnalleexample.geekbrains_movieviewer.app
 import com.magnalleexample.geekbrains_movieviewer.databinding.HomeFragmentBinding
+import com.magnalleexample.geekbrains_movieviewer.databinding.TopFragmentBinding
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
+import com.magnalleexample.geekbrains_movieviewer.ui.home.HomeFragmentDirections
+import com.magnalleexample.geekbrains_movieviewer.ui.home.HomeViewModel
 import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieDataListener
 import com.magnalleexample.geekbrains_movieviewer.ui.movieList.MovieListAdapter
 
+class TopFragment : Fragment() {
 
-class HomeFragment : Fragment() , HomeInterface.View {
-
-    private lateinit var viewModel: HomeViewModel
     companion object {
-        fun newInstance() = HomeFragment()
+        fun newInstance() = TopFragment()
     }
+
+    private lateinit var viewModel: TopViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         val application = requireNotNull(this.activity).application
-        val binding : HomeFragmentBinding = DataBindingUtil.inflate(
-            inflater, R.layout.home_fragment, container, false
+        val binding : TopFragmentBinding = DataBindingUtil.inflate(
+            inflater, R.layout.top_fragment, container, false
         )
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(TopViewModel::class.java)
         viewModel.repo = application.app.repository
         viewModel.loadData()
-        binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
         val spinnerAdapter: ArrayAdapter<String> =
@@ -72,43 +75,33 @@ class HomeFragment : Fragment() , HomeInterface.View {
             }
         })
 
-
-        val watchListAdapter = MovieListAdapter(MovieDataListener{
+        val topListAdapter = MovieListAdapter(MovieDataListener{
             viewModel.onMovieClicked(it)
         })
-        binding.watchListRecyclerView.adapter = watchListAdapter
-        binding.watchListRecyclerView.layoutManager = LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false)
-        viewModel.watchList?.observe(viewLifecycleOwner, Observer {
+        binding.topListRecyclerView.adapter = topListAdapter
+        //binding.topListRecyclerView.layoutManager = GridLayoutManager(getActivity(), 3, RecyclerView.VERTICAL, false)
+        binding.topListRecyclerView.layoutManager = LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false)
+        viewModel.topList.observe(viewLifecycleOwner, Observer {
             it?.let{
-                watchListAdapter.submitList(it)
+                topListAdapter.submitList(it)
             }
         })
-
-        val favoritesAdapter = MovieListAdapter(MovieDataListener{
-            viewModel.onMovieClicked(it)
-        })
-        binding.favoritesRecyclerView.adapter = favoritesAdapter
-        binding.favoritesRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-
-        viewModel.favorites?.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                favoritesAdapter.submitList(it)
-            }
-        })
-
         viewModel.navigateToMovieData.observe(viewLifecycleOwner, Observer { movieData ->
             navigateToMovieData(movieData)
         })
-
         return binding.root
     }
 
-    override fun navigateToMovieData(movieData: MovieData?) {
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(TopViewModel::class.java)
+    }
+
+    fun navigateToMovieData(movieData: MovieData?) {
         movieData?.let {
             findNavController().navigate(
-                HomeFragmentDirections.actionHomeToMovieDetails(movieData))
+                TopFragmentDirections.actionNavigationTopToNavigationMovieDetails(movieData))
             viewModel.doneNavigating()
         }
     }
-
 }

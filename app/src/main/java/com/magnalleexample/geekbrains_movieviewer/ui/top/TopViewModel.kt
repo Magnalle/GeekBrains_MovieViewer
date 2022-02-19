@@ -1,49 +1,35 @@
-package com.magnalleexample.geekbrains_movieviewer.ui.home
+package com.magnalleexample.geekbrains_movieviewer.ui.top
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.magnalleexample.geekbrains_movieviewer.data.MoviesApiService
+import androidx.navigation.fragment.findNavController
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.Genre
 import com.magnalleexample.geekbrains_movieviewer.domain.entity.MovieData
 import com.magnalleexample.geekbrains_movieviewer.domain.repo.Repo
+import com.magnalleexample.geekbrains_movieviewer.ui.home.HomeFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() , HomeInterface.ViewModel{
+class TopViewModel : ViewModel() {
     lateinit var repo : Repo
-    override val genresList : MutableLiveData<List<Genre>> = MutableLiveData()
-    override val watchList : MutableLiveData<List<MovieData>> = MutableLiveData()
-    override val favorites : MutableLiveData<List<MovieData>> = MutableLiveData()
-
+    val genresList : MutableLiveData<List<Genre>> = MutableLiveData()
+    val topList : MutableLiveData<List<MovieData>> = MutableLiveData()
     fun loadData(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val temp = repo.getTopList(repo)
+            viewModelScope.launch(Dispatchers.Main) {
+                topList.postValue(temp)
+            }
+        }
+
         viewModelScope.launch(Dispatchers.IO) {
             val temp = repo.getGenresList()
             viewModelScope.launch(Dispatchers.Main) {
                 genresList.value = temp
             }
         }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            val temp = repo.getWatchList()
-            viewModelScope.launch(Dispatchers.Main) {
-                watchList.value = temp
-            }
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            val temp = repo.getFavoritesList()
-            viewModelScope.launch(Dispatchers.Main) {
-                favorites.value = temp
-            }
-        }
     }
-
-    override fun getGenresFormatted(): List<String> {
-        return listOf("All genres").plus(genresList.value?.map { it.name }?: listOf())
-    }
-
     private var _navigateToMovieData = MutableLiveData<MovieData?>()
     val navigateToMovieData
         get() = _navigateToMovieData
@@ -56,4 +42,7 @@ class HomeViewModel : ViewModel() , HomeInterface.ViewModel{
         _navigateToMovieData.value = null
     }
 
+    fun getGenresFormatted(): List<String> {
+        return listOf("All genres").plus(genresList.value?.map { it.name }?: listOf())
+    }
 }
